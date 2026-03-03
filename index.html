@@ -1,0 +1,1003 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>António Oleiro — IT Technician & Cybersecurity</title>
+<link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Exo+2:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #050a0f;
+    --surface: #0a1520;
+    --panel: #0d1e2e;
+    --cyan: #00f5ff;
+    --cyan-dim: #00b8c8;
+    --green: #00ff88;
+    --orange: #ff6b2b;
+    --text: #c8e6f0;
+    --muted: #4a7a94;
+    --border: rgba(0,245,255,0.15);
+    --glow: 0 0 20px rgba(0,245,255,0.3);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Exo 2', sans-serif;
+    font-weight: 300;
+    overflow-x: hidden;
+  }
+
+  /* SCANLINE OVERLAY */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background: repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 2px,
+      rgba(0,0,0,0.03) 2px,
+      rgba(0,0,0,0.03) 4px
+    );
+    pointer-events: none;
+    z-index: 9999;
+  }
+
+  /* GRID BACKGROUND */
+  body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(0,245,255,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0,245,255,0.03) 1px, transparent 1px);
+    background-size: 40px 40px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 18px 60px;
+    background: rgba(5,10,15,0.85);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .nav-logo {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 14px;
+    color: var(--cyan);
+    letter-spacing: 3px;
+    text-transform: uppercase;
+  }
+
+  .nav-logo span { color: var(--muted); }
+
+  .nav-links {
+    display: flex;
+    gap: 32px;
+    list-style: none;
+  }
+
+  .nav-links a {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 2px;
+    color: var(--muted);
+    text-decoration: none;
+    text-transform: uppercase;
+    transition: color 0.2s;
+    position: relative;
+  }
+
+  .nav-links a::after {
+    content: '';
+    position: absolute;
+    bottom: -4px; left: 0; right: 0;
+    height: 1px;
+    background: var(--cyan);
+    transform: scaleX(0);
+    transition: transform 0.2s;
+  }
+
+  .nav-links a:hover { color: var(--cyan); }
+  .nav-links a:hover::after { transform: scaleX(1); }
+
+  /* HERO */
+  .hero {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    padding: 120px 60px 80px;
+    z-index: 1;
+    overflow: hidden;
+  }
+
+  .hero-bg-circle {
+    position: absolute;
+    width: 600px; height: 600px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(0,245,255,0.06) 0%, transparent 70%);
+    right: -100px; top: 50%;
+    transform: translateY(-50%);
+    pointer-events: none;
+  }
+
+  .hero-content { max-width: 720px; }
+
+  .hero-tag {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 4px;
+    color: var(--cyan);
+    text-transform: uppercase;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    animation: fadeUp 0.6s ease both;
+  }
+
+  .hero-tag::before {
+    content: '';
+    width: 30px; height: 1px;
+    background: var(--cyan);
+  }
+
+  .hero h1 {
+    font-size: clamp(52px, 7vw, 90px);
+    font-weight: 900;
+    line-height: 0.95;
+    letter-spacing: -2px;
+    margin-bottom: 8px;
+    animation: fadeUp 0.6s 0.1s ease both;
+  }
+
+  .hero h1 .last { color: var(--cyan); }
+
+  .hero-role {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 14px;
+    letter-spacing: 5px;
+    color: var(--orange);
+    text-transform: uppercase;
+    margin-bottom: 32px;
+    animation: fadeUp 0.6s 0.2s ease both;
+  }
+
+  .hero-bio {
+    font-size: 16px;
+    line-height: 1.8;
+    color: var(--muted);
+    max-width: 560px;
+    margin-bottom: 48px;
+    animation: fadeUp 0.6s 0.3s ease both;
+  }
+
+  .hero-bio strong { color: var(--text); font-weight: 400; }
+
+  .hero-cta {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+    animation: fadeUp 0.6s 0.4s ease both;
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 28px;
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    text-decoration: none;
+    border: 1px solid var(--cyan);
+    color: var(--cyan);
+    background: transparent;
+    transition: all 0.25s;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .btn::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--cyan);
+    transform: translateX(-100%);
+    transition: transform 0.25s;
+  }
+
+  .btn:hover { color: var(--bg); }
+  .btn:hover::before { transform: translateX(0); }
+  .btn span { position: relative; z-index: 1; }
+
+  .btn-ghost {
+    border-color: var(--muted);
+    color: var(--muted);
+  }
+
+  .btn-ghost::before { background: var(--muted); }
+  .btn-ghost:hover { color: var(--bg); }
+
+  /* STATS */
+  .hero-stats {
+    position: absolute;
+    right: 60px; bottom: 80px;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    animation: fadeUp 0.6s 0.5s ease both;
+  }
+
+  .stat {
+    text-align: right;
+  }
+
+  .stat-number {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 32px;
+    color: var(--cyan);
+    line-height: 1;
+  }
+
+  .stat-label {
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-top: 4px;
+  }
+
+  .stat-divider {
+    width: 60px;
+    height: 1px;
+    background: var(--border);
+    margin-left: auto;
+    margin-top: 24px;
+  }
+
+  /* SECTIONS */
+  section {
+    position: relative;
+    z-index: 1;
+    padding: 100px 60px;
+  }
+
+  .section-label {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 4px;
+    color: var(--cyan);
+    text-transform: uppercase;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .section-label::after {
+    content: '';
+    flex: 1;
+    max-width: 80px;
+    height: 1px;
+    background: var(--border);
+  }
+
+  .section-title {
+    font-size: clamp(32px, 4vw, 52px);
+    font-weight: 700;
+    letter-spacing: -1px;
+    margin-bottom: 60px;
+  }
+
+  /* EXPERIENCE */
+  .exp-list { display: flex; flex-direction: column; gap: 2px; }
+
+  .exp-item {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    padding: 36px 40px;
+    position: relative;
+    transition: border-color 0.25s, transform 0.25s;
+    overflow: hidden;
+  }
+
+  .exp-item::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 3px;
+    background: var(--cyan);
+    transform: scaleY(0);
+    transition: transform 0.3s;
+    transform-origin: bottom;
+  }
+
+  .exp-item:hover { border-color: rgba(0,245,255,0.4); transform: translateX(4px); }
+  .exp-item:hover::before { transform: scaleY(1); }
+
+  .exp-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 6px;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .exp-org {
+    font-size: 20px;
+    font-weight: 700;
+    color: #fff;
+  }
+
+  .exp-date {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 11px;
+    color: var(--orange);
+    letter-spacing: 1px;
+  }
+
+  .exp-role {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 2px;
+    color: var(--cyan);
+    text-transform: uppercase;
+    margin-bottom: 20px;
+  }
+
+  .exp-grade {
+    display: inline-block;
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 1px;
+    color: var(--green);
+    background: rgba(0,255,136,0.08);
+    border: 1px solid rgba(0,255,136,0.2);
+    padding: 3px 10px;
+    margin-bottom: 20px;
+  }
+
+  .exp-tasks {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .exp-tasks li {
+    font-size: 14px;
+    color: var(--muted);
+    padding-left: 16px;
+    position: relative;
+    line-height: 1.6;
+  }
+
+  .exp-tasks li::before {
+    content: '›';
+    position: absolute;
+    left: 0;
+    color: var(--cyan-dim);
+  }
+
+  /* SKILLS */
+  .skills-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2px;
+  }
+
+  .skills-card {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    padding: 36px;
+    transition: border-color 0.25s;
+  }
+
+  .skills-card:hover { border-color: rgba(0,245,255,0.35); }
+
+  .skills-card-title {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 3px;
+    color: var(--cyan);
+    text-transform: uppercase;
+    margin-bottom: 28px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .skills-card-title .dot {
+    width: 6px; height: 6px;
+    background: var(--cyan);
+    display: inline-block;
+  }
+
+  .skill-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 12px;
+    color: var(--text);
+    background: rgba(0,245,255,0.05);
+    border: 1px solid rgba(0,245,255,0.1);
+    padding: 6px 14px;
+    margin: 4px 4px 4px 0;
+    transition: all 0.2s;
+  }
+
+  .skill-tag:hover {
+    background: rgba(0,245,255,0.12);
+    border-color: rgba(0,245,255,0.3);
+    color: var(--cyan);
+  }
+
+  .soft-tag {
+    background: rgba(255,107,43,0.05);
+    border-color: rgba(255,107,43,0.1);
+  }
+
+  .soft-tag:hover {
+    background: rgba(255,107,43,0.12);
+    border-color: rgba(255,107,43,0.3);
+    color: var(--orange);
+  }
+
+  .lang-entry {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 14px;
+  }
+
+  .lang-entry:last-child { border-bottom: none; }
+
+  .lang-level {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 2px;
+    color: var(--green);
+  }
+
+  /* EDUCATION */
+  .edu-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2px;
+  }
+
+  .edu-card {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    padding: 40px;
+    position: relative;
+    overflow: hidden;
+    transition: border-color 0.25s;
+  }
+
+  .edu-card:hover { border-color: rgba(0,245,255,0.35); }
+
+  .edu-card::after {
+    content: attr(data-eqf);
+    position: absolute;
+    bottom: 20px; right: 24px;
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 48px;
+    color: rgba(0,245,255,0.04);
+    font-weight: 900;
+    line-height: 1;
+  }
+
+  .edu-period {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 2px;
+    color: var(--orange);
+    margin-bottom: 14px;
+  }
+
+  .edu-name {
+    font-size: 20px;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 8px;
+  }
+
+  .edu-inst {
+    font-size: 13px;
+    color: var(--muted);
+    margin-bottom: 20px;
+  }
+
+  .edu-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--cyan);
+    background: rgba(0,245,255,0.06);
+    border: 1px solid rgba(0,245,255,0.15);
+    padding: 5px 12px;
+    margin-right: 8px;
+    margin-bottom: 8px;
+  }
+
+  /* CONTACT */
+  .contact-section {
+    background: var(--surface);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .contact-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: center;
+  }
+
+  .contact-info { display: flex; flex-direction: column; gap: 16px; }
+
+  .contact-link {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 20px 24px;
+    background: var(--panel);
+    border: 1px solid var(--border);
+    text-decoration: none;
+    transition: all 0.25s;
+  }
+
+  .contact-link:hover {
+    border-color: rgba(0,245,255,0.4);
+    transform: translateX(6px);
+  }
+
+  .contact-icon {
+    width: 36px; height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0,245,255,0.08);
+    border: 1px solid rgba(0,245,255,0.15);
+    color: var(--cyan);
+    font-size: 14px;
+    flex-shrink: 0;
+  }
+
+  .contact-link-text {
+    font-size: 14px;
+    color: var(--text);
+  }
+
+  .contact-link-label {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 2px;
+    color: var(--muted);
+    text-transform: uppercase;
+  }
+
+  .contact-message h3 {
+    font-size: 36px;
+    font-weight: 700;
+    margin-bottom: 16px;
+  }
+
+  .contact-message p {
+    font-size: 15px;
+    line-height: 1.8;
+    color: var(--muted);
+    margin-bottom: 28px;
+  }
+
+  /* FOOTER */
+  footer {
+    padding: 30px 60px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+    z-index: 1;
+  }
+
+  .footer-copy {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 2px;
+    color: var(--muted);
+  }
+
+  .footer-status {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 2px;
+    color: var(--green);
+  }
+
+  .pulse {
+    width: 6px; height: 6px;
+    background: var(--green);
+    border-radius: 50%;
+    animation: pulse 2s infinite;
+  }
+
+  /* TERMINAL BLOCK */
+  .terminal {
+    background: rgba(0,0,0,0.5);
+    border: 1px solid rgba(0,245,255,0.15);
+    padding: 24px 28px;
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 13px;
+    line-height: 2;
+  }
+
+  .terminal .prompt { color: var(--cyan); }
+  .terminal .cmd { color: var(--text); }
+  .terminal .out { color: var(--muted); }
+  .terminal .val { color: var(--green); }
+
+  /* DIVIDER */
+  .divider {
+    height: 1px;
+    background: var(--border);
+    margin: 0 60px;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* ANIMATIONS */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); box-shadow: 0 0 0 0 rgba(0,255,136,0.4); }
+    50% { opacity: 0.8; transform: scale(1.1); box-shadow: 0 0 0 6px rgba(0,255,136,0); }
+  }
+
+  @keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
+  }
+
+  .cursor {
+    display: inline-block;
+    width: 8px; height: 16px;
+    background: var(--cyan);
+    vertical-align: middle;
+    margin-left: 4px;
+    animation: blink 1s infinite;
+  }
+
+  /* SCROLL INDICATOR */
+  .scroll-hint {
+    position: absolute;
+    bottom: 40px; left: 60px;
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 3px;
+    color: var(--muted);
+    text-transform: uppercase;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    animation: fadeUp 0.6s 0.8s ease both;
+  }
+
+  .scroll-line {
+    width: 40px; height: 1px;
+    background: var(--muted);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .scroll-line::after {
+    content: '';
+    position: absolute;
+    left: -100%;
+    top: 0; bottom: 0;
+    width: 100%;
+    background: var(--cyan);
+    animation: slideRight 2s infinite;
+  }
+
+  @keyframes slideRight {
+    to { left: 100%; }
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 900px) {
+    nav { padding: 16px 24px; }
+    .nav-links { display: none; }
+    section { padding: 70px 24px; }
+    .hero { padding: 100px 24px 80px; }
+    .hero-stats { display: none; }
+    .skills-grid, .edu-grid { grid-template-columns: 1fr; }
+    .contact-grid { grid-template-columns: 1fr; gap: 40px; }
+    footer { padding: 24px; flex-direction: column; gap: 12px; text-align: center; }
+    .divider { margin: 0 24px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">AO<span>./</span>portfolio</div>
+  <ul class="nav-links">
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#education">Education</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg-circle"></div>
+  <div class="hero-content">
+    <div class="hero-tag">Available for opportunities</div>
+    <h1>António<br><span class="last">Oleiro</span></h1>
+    <div class="hero-role">IT Technician &nbsp;|&nbsp; Cybersecurity</div>
+    <p class="hero-bio">
+      Young professional certified in Computer Technology. Currently specialising in <strong>Cybersecurity</strong>,
+      with the goal of building a career in the Information Technology sector. Solid IT fundamentals,
+      a sharp eye for problems, and a strong drive to <strong>learn and contribute</strong>.
+    </p>
+    <div class="hero-cta">
+      <a href="#contact" class="btn"><span>Get in touch</span></a>
+      <a href="#experience" class="btn btn-ghost"><span>View experience</span></a>
+    </div>
+  </div>
+
+  <div class="hero-stats">
+    <div class="stat">
+      <div class="stat-number">600<span style="font-size:16px;color:var(--muted)">h</span></div>
+      <div class="stat-label">Workplace Training</div>
+    </div>
+    <div class="stat-divider"></div>
+    <div class="stat">
+      <div class="stat-number">3</div>
+      <div class="stat-label">Languages</div>
+    </div>
+    <div class="stat-divider"></div>
+    <div class="stat">
+      <div class="stat-number">20</div>
+      <div class="stat-label">Top Grade</div>
+    </div>
+  </div>
+
+  <div class="scroll-hint">
+    <div class="scroll-line"></div>
+    Scroll to explore
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- EXPERIENCE -->
+<section id="experience">
+  <div class="section-label">Professional Experience</div>
+  <div class="section-title">Where I've worked</div>
+
+  <div class="exp-list">
+
+    <div class="exp-item">
+      <div class="exp-header">
+        <div class="exp-org">Montijo City Council</div>
+        <div class="exp-date">Apr 2024 — Jun 2024</div>
+      </div>
+      <div class="exp-role">Workplace Training &nbsp;·&nbsp; 355 hours</div>
+      <div class="exp-grade">Final Grade: 18 / 20</div>
+      <ul class="exp-tasks">
+        <li>Formatting and reinstalling operating systems, ensuring correct software configuration.</li>
+        <li>Collecting and managing hardware components to keep IT stock up to date.</li>
+        <li>Identifying and resolving malfunctions in equipment and systems.</li>
+        <li>Organising and administering network infrastructure.</li>
+        <li>Planning and developing local technological infrastructure to meet the organisation's needs.</li>
+        <li>Centralised management of IT resources, optimising performance and extending lifecycle.</li>
+      </ul>
+    </div>
+
+    <div class="exp-item">
+      <div class="exp-header">
+        <div class="exp-org">D. Pedro Varela School</div>
+        <div class="exp-date">Feb 2023 — Mar 2023</div>
+      </div>
+      <div class="exp-role">Workplace Training &nbsp;·&nbsp; 245 hours</div>
+      <div class="exp-grade">Final Grade: 20 / 20</div>
+      <ul class="exp-tasks">
+        <li>Formatting and configuring operating systems on computers and tablets, including hardware management.</li>
+        <li>Troubleshooting and resolving malfunctions in computer equipment.</li>
+        <li>Organising, maintaining, and managing computer labs, ensuring full operability.</li>
+        <li>Installing, administering, and maintaining computer networks, ensuring infrastructure stability and security.</li>
+        <li>Short/medium-term planning of local technological infrastructure.</li>
+      </ul>
+    </div>
+
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ASSOCIATIVISM -->
+<section style="padding: 70px 60px;">
+  <div class="section-label">Community Involvement</div>
+  <div class="section-title">Beyond the screen</div>
+
+  <div class="exp-list">
+    <div class="exp-item" style="display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:16px;">
+      <div>
+        <div class="exp-org" style="margin-bottom:6px;">Carnival Parade Organisation</div>
+        <div class="exp-role">Safety & Event Support</div>
+        <p style="font-size:14px; color:var(--muted); line-height:1.7; max-width:560px;">Maintained safety conditions during the Carnival parade and supported the wider event organisation team.</p>
+      </div>
+      <div class="exp-date" style="flex-shrink:0;">Feb 2023 / 2024</div>
+    </div>
+
+    <div class="exp-item" style="display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:16px;">
+      <div>
+        <div class="exp-org" style="margin-bottom:6px;">Resource Optimisation Plan</div>
+        <div class="exp-role">Project Development</div>
+        <p style="font-size:14px; color:var(--muted); line-height:1.7; max-width:560px;">Prepared a project and budget proposal for optimising classroom technology resources.</p>
+      </div>
+      <div class="exp-date" style="flex-shrink:0;">Mar 2024</div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- SKILLS -->
+<section id="skills">
+  <div class="section-label">Capabilities</div>
+  <div class="section-title">Skills & tools</div>
+
+  <div class="skills-grid">
+    <div class="skills-card">
+      <div class="skills-card-title"><span class="dot"></span>Hard Skills</div>
+      <span class="skill-tag">SQL</span>
+      <span class="skill-tag">Java</span>
+      <span class="skill-tag">Python</span>
+      <span class="skill-tag">C#</span>
+      <span class="skill-tag">C++</span>
+      <span class="skill-tag">HTML</span>
+      <span class="skill-tag">CSS</span>
+      <span class="skill-tag">Microsoft Office</span>
+    </div>
+
+    <div class="skills-card">
+      <div class="skills-card-title"><span class="dot" style="background:var(--orange)"></span>Soft Skills</div>
+      <span class="skill-tag soft-tag">Organisation & Planning</span>
+      <span class="skill-tag soft-tag">Attention to Detail</span>
+      <span class="skill-tag soft-tag">Critical Analysis</span>
+      <span class="skill-tag soft-tag">Teamwork</span>
+      <span class="skill-tag soft-tag">Problem Solving</span>
+    </div>
+
+    <div class="skills-card">
+      <div class="skills-card-title"><span class="dot" style="background:var(--green)"></span>Languages</div>
+      <div class="lang-entry">
+        <span>Portuguese</span>
+        <span class="lang-level">Native / Fluent</span>
+      </div>
+      <div class="lang-entry">
+        <span>English</span>
+        <span class="lang-level">B2+</span>
+      </div>
+      <div class="lang-entry">
+        <span>Spanish</span>
+        <span class="lang-level">B2.2</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- EDUCATION -->
+<section id="education">
+  <div class="section-label">Academic Background</div>
+  <div class="section-title">Education</div>
+
+  <div class="edu-grid">
+    <div class="edu-card" data-eqf="5">
+      <div class="edu-period">Sep 2024 — Jun 2026</div>
+      <div class="edu-name">CTeSP in Cybersecurity</div>
+      <div class="edu-inst">Lusophone Polytechnic Institute</div>
+      <span class="edu-badge">EQF Level 5</span>
+      <span class="edu-badge">In Progress</span>
+    </div>
+
+    <div class="edu-card" data-eqf="4">
+      <div class="edu-period">Sep 2021 — Jul 2024</div>
+      <div class="edu-name">Computer Systems Programming</div>
+      <div class="edu-inst">Montijo Vocational School</div>
+      <span class="edu-badge">EQF Level 4</span>
+      <span class="edu-badge" style="color:var(--green);background:rgba(0,255,136,0.06);border-color:rgba(0,255,136,0.15);">Grade: 15</span>
+      <p style="font-size:13px;color:var(--muted);line-height:1.7;margin-top:16px;">Developed strong interest in software development, programming, and cybersecurity throughout the course.</p>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- CONTACT -->
+<section id="contact" class="contact-section">
+  <div class="contact-grid">
+    <div class="contact-message">
+      <div class="section-label">Contact</div>
+      <h3>Let's connect<span class="cursor"></span></h3>
+      <p>Looking to join a dynamic team where I can apply and grow my skills in IT and cybersecurity. Open to internships, junior roles, and collaborative projects.</p>
+      <a href="https://www.linkedin.com/in/antonio-oleiro/" target="_blank" class="btn"><span>LinkedIn Profile</span></a>
+    </div>
+
+    <div class="contact-info">
+      <a href="tel:+351927586741" class="contact-link">
+        <div class="contact-icon">☎</div>
+        <div>
+          <div class="contact-link-label">Phone</div>
+          <div class="contact-link-text">(+351) 927 586 741</div>
+        </div>
+      </a>
+      <a href="mailto:antonio.oleiro2802@gmail.com" class="contact-link">
+        <div class="contact-icon">@</div>
+        <div>
+          <div class="contact-link-label">Email</div>
+          <div class="contact-link-text">antonio.oleiro2802@gmail.com</div>
+        </div>
+      </a>
+      <a href="https://www.linkedin.com/in/antonio-oleiro/" target="_blank" class="contact-link">
+        <div class="contact-icon">in</div>
+        <div>
+          <div class="contact-link-label">LinkedIn</div>
+          <div class="contact-link-text">linkedin.com/in/antonio-oleiro</div>
+        </div>
+      </a>
+
+      <div class="terminal" style="margin-top:8px;">
+        <div><span class="prompt">$ </span><span class="cmd">whoami</span></div>
+        <div class="out">→ <span class="val">António Oleiro</span></div>
+        <div><span class="prompt">$ </span><span class="cmd">status</span></div>
+        <div class="out">→ <span class="val">Open to opportunities</span></div>
+        <div><span class="prompt">$ </span><span class="cmd">location</span></div>
+        <div class="out">→ <span class="val">Lisboa, Portugal</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-copy">© 2026 António Ole
