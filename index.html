@@ -484,7 +484,7 @@
   /* EDUCATION */
   .edu-grid {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: repeat(3, 1fr);
     gap: 2px;
   }
 
@@ -1085,12 +1085,19 @@
   <div class="section-title">Education</div>
 
   <div class="edu-grid">
+    <div class="edu-card" data-eqf="6">
+      <div class="edu-period">Sep 2026 — Present</div>
+      <div class="edu-name">Computer Engineering & Applications</div>
+      <div class="edu-inst">Lusophone Polytechnic Institute</div>
+      <span class="edu-badge">EQF Level 6</span>
+      <span class="edu-badge" style="color:var(--green);background:rgba(0,255,136,0.06);border-color:rgba(0,255,136,0.15);">In Progress</span>
+    </div>
+
     <div class="edu-card" data-eqf="5">
       <div class="edu-period">Sep 2024 — Jun 2026</div>
       <div class="edu-name">CTeSP in Cybersecurity</div>
       <div class="edu-inst">Lusophone Polytechnic Institute</div>
       <span class="edu-badge">EQF Level 5</span>
-      <span class="edu-badge">In Progress</span>
     </div>
 
     <div class="edu-card" data-eqf="4">
@@ -1099,7 +1106,6 @@
       <div class="edu-inst">Montijo Vocational School</div>
       <span class="edu-badge">EQF Level 4</span>
       
-      <p style="font-size:13px;color:var(--muted);line-height:1.7;margin-top:16px;">Developed strong interest in software development, programming, and cybersecurity throughout the course.</p>
     </div>
   </div>
 </section>
